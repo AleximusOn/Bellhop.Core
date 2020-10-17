@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=dbadm
+      - POSTGRES_PASSWORD=p@ssw0rd
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - .pg_store:/var/lib/postgresql/data
