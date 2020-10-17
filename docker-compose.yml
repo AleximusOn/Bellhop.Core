@@ -1,13 +1,14 @@
-version: '3.7'
-
+version: "3.7"
 services:
-
-  db:
+  postgres-db:
     image: postgres:13
-    restart: always
+    restart: on-failure
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=dbadm
       - POSTGRES_PASSWORD=p@ssw0rd
       - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=postgres
     volumes:
-      - .pg_store:/var/lib/postgresql/data
+      - ./.pg_store:/var/lib/postgresql

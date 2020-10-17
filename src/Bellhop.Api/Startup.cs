@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Bellhop.Core.Models;
+using Bellhop.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System;
 
 namespace Bellhop.Api
 {
@@ -25,6 +24,13 @@ namespace Bellhop.Api
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
+
+			services.AddDbContext<AppDbContext>(o =>
+				o.UseNpgsql(Configuration.GetConnectionString("default")));
+
+			services.AddIdentity<Account, IdentityRole<Guid>>()
+				.AddEntityFrameworkStores<AppDbContext>()
+				.AddDefaultTokenProviders();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
